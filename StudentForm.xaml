@@ -1,0 +1,514 @@
+﻿<Window x:Class="EMS.StudentForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EMS"
+        mc:Ignorable="d"
+        Title="Enrollment Management System" 
+        Height="690" Width="820"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" ResizeMode="NoResize" 
+        Background="Transparent" AllowsTransparency="True">
+
+    <Border>
+        <Border.Effect>
+
+            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.5" 
+                Color="Black" />
+        </Border.Effect>
+
+        <Grid Margin="20" Background="#fff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Top bar-->
+        <Grid Grid.Row="0" Background="#212529" MouseDown="Grid_MouseDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0" >
+                <Label Width="25"/>
+                <Image Width="Auto" Height="25" Source="Images/enrollment.png"/>
+                <TextBlock Text="  Enrollment Management Sytem" Foreground="#fff" 
+                    VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Fonts/#Montserrat"/>
+            </DockPanel>
+
+            <Button Grid.Column="1" x:Name="CloseBtn" Foreground="#fff" FontSize="20" 
+                Cursor="Hand" FontFamily="Fonts/#Montserrat" Width="30" Height="30" 
+                HorizontalAlignment="Right" Click="Close">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="DarkRed"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="DarkRed" BorderThickness="1">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    </Button.Style>
+                    <Image Source="Images/close.png" Width="15" Height="15"></Image>
+                </Button>
+        </Grid>
+        <!-- End of Top bar-->
+
+        
+        <Grid Margin="20" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <!--0-->
+                <RowDefinition Height="30"/>
+                <!--1-->
+                <RowDefinition Height="30"/>
+                <!--2-->
+                <RowDefinition Height="30"/>
+                <!--3-->
+                <RowDefinition Height="30"/>
+                <!--4-->
+                <RowDefinition Height="30"/>
+                <!--5-->
+                <RowDefinition Height="30"/>
+                <!--6-->
+                <RowDefinition Height="30"/>
+                <!--7-->
+                <RowDefinition Height="30"/>
+                <!--8-->
+                <RowDefinition Height="30"/>
+                <!--9-->
+                <RowDefinition Height="30"/>
+                <!--10-->
+                <RowDefinition Height="30"/>
+                <!--11-->
+                <RowDefinition Height="30"/>
+                <!--12-->
+                <RowDefinition Height="30"/>
+                <!--13-->
+                <RowDefinition Height="30"/>
+                <!--14-->
+                <RowDefinition Height="30"/>
+                <!--15-->
+                <RowDefinition Height="30"/>
+                <!--16-->
+                <RowDefinition Height="30"/>
+                <!--17-->
+                <RowDefinition Height="30"/>
+                <!--18-->
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="studentFormHeadText" Grid.Row="0" 
+                TextWrapping="Wrap"
+                FontFamily="Fonts/#Montserrat"
+                FontSize="20" FontWeight="Bold"/>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="scholarshipGrantLbl" Grid.Column="1"
+                    Content="Scholarship Grant"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="idNumLbl" Grid.Column="2" 
+                    Content="School ID Number"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="ayLbl" Grid.Column="3" 
+                    Content="Academic Year"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+            </Grid>
+                
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="scholarshipGrantTxtBox" Grid.Column="1" 
+                        Margin="0 0 10 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+                <TextBox x:Name="idNumTxtBox" Grid.Column="2" 
+                        Margin="0 0 10 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+                <TextBox x:Name="ayTxtBox" Grid.Column="3" 
+                        FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="lastNameLbl" Grid.Column="0" Content="Last Name"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="firstNameLbl" Grid.Column="1" Content="First Name"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="middleNameLbl" Grid.Column="2" Content="Middle Name"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+            </Grid>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="lastNameTxtBox" Grid.Column="0" 
+                        Margin="0 0 10 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+                <TextBox x:Name="firstNameTxtBox" Grid.Column="1" 
+                        Margin="0 0 10 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+                <TextBox x:Name="middleNameTxtBox" Grid.Column="2" 
+                        FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+
+            </Grid>
+
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="sexLbl" Grid.Column="0" Content="Sex"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="civilStatusLbl" Grid.Column="1" 
+                    Content="Civil Status"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="programLbl" Grid.Column="2" 
+                    Content="Program"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="yrLbl" Grid.Column="3" 
+                    Content="Year Level"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="semLbl" Grid.Column="4" 
+                    Content="Sem"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+            </Grid>
+
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox x:Name="sexComBox" Grid.Column="0"
+                    Margin="0 0 10 0" FontSize="14" Padding="5" 
+                    FontFamily="Fonts/#Montserrat" Background="#fff">
+                    <ComboBoxItem Content="Male" Tag="male"
+                                  Padding="5"/>
+                    <ComboBoxItem Content="Female" Tag="female"
+                                  Padding="5"/>
+                </ComboBox>
+                <ComboBox x:Name="civilStatusComBox" Grid.Column="1"
+                    Margin="0 0 10 0" FontSize="14" Padding="5" 
+                    FontFamily="Fonts/#Montserrat" Background="#fff">
+                    <ComboBoxItem Content="Single" Padding="5"/>
+                    <ComboBoxItem Content="Married" Padding="5"/>
+                    <ComboBoxItem Content="Divorced" Padding="5"/>
+                    <ComboBoxItem Content="Separated" Padding="5"/>
+                    <ComboBoxItem Content="Widowed" Padding="5"/>
+                </ComboBox>
+                <TextBox x:Name="programTxtBox" Grid.Column="2" 
+                        Margin="0 0 10 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+                <ComboBox x:Name="yrComBox" Grid.Column="3"
+                    Margin="0 0 10 0" FontSize="14" Padding="5" 
+                    FontFamily="Fonts/#Montserrat" Background="#fff">
+                    <ComboBoxItem Content="1st Year" Padding="5"/>
+                    <ComboBoxItem Content="2nd Year" Padding="5"/>
+                    <ComboBoxItem Content="3rd Year" Padding="5"/>
+                    <ComboBoxItem Content="4th Year" Padding="5"/>
+                </ComboBox>
+                <ComboBox x:Name="semComBox" Grid.Column="4"
+                    Margin="0 0 0 0" FontSize="14" Padding="5" 
+                    FontFamily="Fonts/#Montserrat" Background="#fff">
+                    <ComboBoxItem Content="1st Sem" Padding="5"/>
+                    <ComboBoxItem Content="2nd Sem" Padding="5"/>
+                </ComboBox>
+            </Grid>
+
+            <Grid Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="basisOfAdmissionLbl" Grid.Column="0" 
+                    Content="Basis of Admission"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="dateOfBirthLbl" Grid.Column="1" 
+                    Content="Date of Birth"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="placeOfBirthLbl" Grid.Column="2" 
+                    Content="Place of Birth"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+            </Grid>
+            <Grid Grid.Row="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox x:Name="basisOfAdmissionComBox" Grid.Column="0"
+                    Margin="0 0 10 0" FontSize="14" Padding="5" 
+                    FontFamily="Fonts/#Montserrat" Background="#fff">
+                    <ComboBoxItem Content="Old" Padding="5"/>
+                    <ComboBoxItem Content="New" Padding="5"/>
+                </ComboBox>
+                <TextBox x:Name="dateOfBirthTxtBox" Grid.Column="1" 
+                        Margin="0 0 10 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+                <TextBox x:Name="placeOfBirthTxtBox" Grid.Column="2" 
+                        Margin="0 0 0 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+            </Grid>
+
+            <Grid Grid.Row="9">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="elemCompletedLbl" Grid.Column="0" 
+                    Content="Elementary Course Completed"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="elemYrGradLbl" Grid.Column="1" 
+                    Content="Year Graduated"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+            </Grid>
+            <Grid Grid.Row="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="elemCompletedTxtBox" Grid.Column="0" 
+                        Margin="0 0 10 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+                <TextBox x:Name="elemYrGradTxtBox" Grid.Column="1" 
+                        Margin="0 0 0 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+            </Grid>
+
+            <Grid Grid.Row="11">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="hsCompletedLbl" Grid.Column="0" 
+                    Content="High School Completed"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="hsYrGradLbl" Grid.Column="1" 
+                    Content="Year Graduated"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+            </Grid>
+            <Grid Grid.Row="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="hsCompletedTxtBox" Grid.Column="0" 
+                        Margin="0 0 10 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+                <TextBox x:Name="hsYrGradTxtBox" Grid.Column="1" 
+                        Margin="0 0 0 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+            </Grid>
+
+            <Grid Grid.Row="13">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="parentsGuardianLbl" Grid.Column="0" 
+                    Content="Parents/Guardian"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="contactNoLbl" Grid.Column="1" 
+                    Content="Contact No."
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+            </Grid>
+            <Grid Grid.Row="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="parentsGuardianTxtBox" Grid.Column="0" 
+                        Margin="0 0 10 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+                <TextBox x:Name="contactNoTxtBox" Grid.Column="1" 
+                        Margin="0 0 0 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+            </Grid>
+
+            <Grid Grid.Row="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="addressLbl" Grid.Column="0" 
+                    Content="Address"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+                <Label x:Name="emailLbl" Grid.Column="1" 
+                    Content="Email"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    FontSize="12" Margin="0" Padding="0"/>
+            </Grid>
+            <Grid Grid.Row="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="addressTxtBox" Grid.Column="0" 
+                        Margin="0 0 10 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+                <TextBox x:Name="emailTxtBox" Grid.Column="1" 
+                        Margin="0 0 0 0" FontSize="14" Padding="5" 
+                        FontFamily="Fonts/#Montserrat"/>
+            </Grid>
+
+            <Grid Grid.Row="17">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="actionHidden" Grid.Column="0"
+                         Visibility="Hidden"/>
+                <TextBox x:Name="idHidden" Grid.Column="1"
+                         Visibility="Hidden"/>
+            </Grid>
+            <Grid Grid.Row="18">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1" x:Name="clearStudentBtn"
+                Margin="5 0 0 0" Cursor="Hand" Visibility="Hidden"
+                Content="Clear" Click="clearAddCourseBtn_Click"
+                Foreground="White" FontFamily="Fonts/#Montserrat">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="#464747"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="#464747" BorderThickness="0 0 0 1">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#7A7E7F"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button Grid.Column="2" x:Name="submitBtn"
+                Margin="5 0 0 0" Cursor="Hand"
+                Click="submitBtn_Click"
+                Foreground="White" FontFamily="Fonts/#Montserrat">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="#007ACC"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="#007ACC" BorderThickness="0 0 0 1">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#1C97EA"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </Grid>
+        </Grid>
+        
+
+    </Grid>
+
+    </Border>
+</Window>

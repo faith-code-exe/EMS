@@ -1,0 +1,252 @@
+﻿<Window x:Class="EMS.AddCourse"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EMS"
+        mc:Ignorable="d"
+        Title="Enrollment Management System" 
+        Height="355" Width="520"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" ResizeMode="NoResize" 
+        Background="Transparent" AllowsTransparency="True">
+    <Border>
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.5" 
+                Color="Black" />
+        </Border.Effect>
+    
+    <Grid Margin="20" Background="#fff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        
+
+        <!-- Top bar-->
+        <Grid Grid.Row="0" Background="#212529" MouseDown="Grid_MouseDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0" >
+                <Label Width="25"/>
+                <Image Width="Auto" Height="25" Source="Images/enrollment.png"/>
+                <TextBlock Text="  Enrollment Management Sytem" Foreground="#fff" 
+                       VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Fonts/#Montserrat"/>
+            </DockPanel>
+
+            <Button Grid.Column="1" x:Name="CloseBtn" Foreground="#fff" FontSize="20" 
+                    Cursor="Hand" FontFamily="Fonts/#Montserrat" Width="30" Height="30" 
+                    HorizontalAlignment="Right" Click="Close">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="DarkRed"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="DarkRed" BorderThickness="1">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                    <Image Source="Images/close.png" Width="15" Height="15"></Image>
+            </Button>
+        </Grid>
+        <!-- End of Top bar-->
+
+        <Grid Grid.Row="1" Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/><!--0-->
+                <RowDefinition Height="0"/><!--1-->
+                
+                <RowDefinition Height="30"/><!--2-->
+                <RowDefinition Height="30"/><!--3-->
+                <RowDefinition Height="0"/><!--4-->
+
+                <RowDefinition Height="30"/><!--5-->
+                <RowDefinition Height="30"/><!--6-->
+                <RowDefinition Height="0"/><!--7-->
+
+                <RowDefinition Height="30"/><!--8-->
+                <RowDefinition Height="30"/><!--9-->
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Grid.Row="0" Text="Add Course"
+                    TextWrapping="Wrap" FontFamily="Fonts/#Montserrat"
+                    FontSize="20" FontWeight="Bold"/>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="CourseCodeLbl" Grid.Column="0" Content="Course Code"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                       FontSize="12" Margin="0" Padding="0"/>
+
+                <Label x:Name="DescriptiveTitleLbl" Grid.Column="1" Content="Descriptive Title"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                       FontSize="12" Margin="0" Padding="0"/>
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="courseCoudeTxtBox" Grid.Column="0" 
+                         Margin="0 0 10 0" FontSize="14" Padding="5" 
+                         FontFamily="Fonts/#Montserrat"/>
+
+                <TextBox x:Name="descriptiveTitleTxtBox" Grid.Column="1" 
+                         FontSize="14" Padding="5" 
+                         FontFamily="Fonts/#Montserrat"/>
+
+            </Grid>
+
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="lecLbl" Grid.Column="0" Content="Lec"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                       FontSize="12" Margin="0" Padding="0"/>
+
+                <Label x:Name="labLbl" Grid.Column="1" Content="Lab"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                       FontSize="12" Margin="0" Padding="0"/>
+                
+                <Label x:Name="unitsLbl" Grid.Column="2" Content="Units"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                       FontSize="12" Margin="0" Padding="0"/>
+                
+                <Label x:Name="instructorLbl" Grid.Column="3" Content="Instructor"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                       FontSize="12" Margin="0" Padding="0"/>
+            </Grid>
+            
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="lecTxtBox" Grid.Column="0" 
+                         Margin="0 0 10 0" FontSize="14" Padding="5" 
+                         FontFamily="Fonts/#Montserrat"/>
+                
+                <TextBox x:Name="labTxtBox" Grid.Column="1" 
+                         Margin="0 0 10 0" FontSize="14" Padding="5" 
+                         FontFamily="Fonts/#Montserrat"/>
+
+                <TextBox x:Name="unitsTxtBox" Grid.Column="2" 
+                         Margin="0 0 10 0" FontSize="14" Padding="5" 
+                         FontFamily="Fonts/#Montserrat"/>
+
+                <TextBox x:Name="instructorTxtBox" Grid.Column="3" 
+                         FontSize="14" Padding="5" 
+                         FontFamily="Fonts/#Montserrat"/>
+
+            </Grid>
+            
+
+            <Grid Grid.Row="9">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="1" x:Name="clearAddCourseBtn"
+                    Margin="5 0 0 0" Cursor="Hand"
+                    Content="Clear" Click="clearAddCourseBtn_Click"
+                    Foreground="White" FontFamily="Fonts/#Montserrat">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="#464747"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="#464747" BorderThickness="0 0 0 1">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#7A7E7F"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button Grid.Column="2" x:Name="addCourseBtn"
+                    Margin="5 0 0 0" Cursor="Hand"
+                    Content="Add Course" Click="addCourseBtn_Click"
+                    Foreground="White" FontFamily="Fonts/#Montserrat">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="#007ACC"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="#007ACC" BorderThickness="0 0 0 1">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#1C97EA"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </Grid>
+
+
+        </Grid>
+
+
+    </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ShowAllFiles>true</ShowAllFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="AccountSettings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="AddCourse.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="AdministratorEdit.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Administrators.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ConfirmPassword.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Courses.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Dashboard.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="DeleteWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="EditCourse.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="FirstTImeUse.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ForgetPassword.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Login.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="MessageWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="PasswordReset.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="PrintPreview.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="SelectCourse.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="SelectStudent.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="StudentForm.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Students.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="AccountSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="AddCourse.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="AdministratorEdit.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Administrators.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ConfirmPassword.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Courses.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Dashboard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="DeleteWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="EditCourse.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FirstTImeUse.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ForgetPassword.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Login.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MessageWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PasswordReset.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PrintPreview.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SelectCourse.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SelectStudent.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="StudentForm.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Students.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

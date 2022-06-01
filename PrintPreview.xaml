@@ -1,0 +1,2286 @@
+﻿<Window x:Class="EMS.PrintPreview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EMS"
+        mc:Ignorable="d"
+        Title="Enrollment Management System" 
+        Height="680" Width="856"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" ResizeMode="NoResize" 
+        Background="Transparent" AllowsTransparency="True">
+    <Window.Resources>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="DodgerBlue"/>
+        </Style>
+    </Window.Resources>
+    <Border>
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.5" 
+                Color="Black" />
+        </Border.Effect>
+        
+        <Grid Margin="20" Background="#fff">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Top bar-->
+
+            <Grid Grid.Row="0" Background="#212529" Grid.ColumnSpan="2" MouseDown="Grid_MouseDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+
+                <DockPanel Grid.Column="0" >
+                    <Label Width="25"/>
+                    <Image Width="Auto" Height="25" Source="Images/enrollment.png"/>
+                    <TextBlock Text="  Enrollment Management Sytem" Foreground="#fff" 
+                       VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Fonts/#Montserrat"/>
+                </DockPanel>
+
+                <Button Grid.Column="1" x:Name="CloseBtn" Foreground="#fff" FontSize="20" 
+                    Cursor="Hand" FontFamily="Fonts/#Montserrat" Width="30" Height="30" 
+                    Click="Close" FontWeight="Medium">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="DarkRed"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="DarkRed" BorderThickness="1">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Red"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Image Source="Images/close.png" Width="15" Height="15"></Image>
+                </Button>
+
+
+            </Grid>
+            <!-- End of Top bar-->
+            <ScrollViewer  Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="1248"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" x:Name="printPreviewHeader">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Print Preview" Margin="20"
+                               TextWrapping="Wrap" FontFamily="Fonts/#Montserrat"
+                               FontSize="30" FontWeight="Bold"/>
+
+                        <Button x:Name="printBtn" Grid.Column="1" Margin="0 0 20 0"
+                        Content="Print" Cursor="Hand" Click="printBtn_Click"
+                        Foreground="White" FontFamily="Fonts/#Montserrat">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Background" Value="#007ACC"/>
+                                    <Setter Property="Height" Value="40"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="#007ACC" BorderThickness="0 0 0 1">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#1C97EA"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+
+                    <Border Grid.Row="1" BorderThickness="0 .5 0 .5">
+                        
+                    </Border>
+
+                    
+                    <Grid Grid.Row="2" x:Name="printPage" 
+                          Margin="20" Height="1248"
+                          Background="#fff">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="614"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="614"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+        <!-- Student Copy Here -->
+                        <Border Grid.Row="0" BorderThickness="0 0 0 .5"/>
+                        <Grid Grid.Row="0">
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="DodgerBlue"/>
+                                </Style>
+                            </Grid.Resources>
+                           
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="16"/>
+                                
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="DJEMFCST FORM No. 003" FontSize="9"/>
+                                    <TextBlock Text="Revised Form 2018 (Enrollment)" FontSize="9"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="" x:Name="headS" 
+                                               FontSize="14" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="" x:Name="headProgramS"
+                                               FontSize="14" HorizontalAlignment="Center"/>
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="2" Text="" Margin="0 0 5 0" x:Name="copyS"
+                                    HorizontalAlignment="Right" FontSize="14" FontStyle="Oblique"/>
+                            </Grid>
+                            <TextBlock Grid.Row="1" HorizontalAlignment="Center"
+                                Text="DON JOSE ECLEO MEMORIAL FOUNDATION COLLEGE OF SCIENCE AND TECHNOLOGY"
+                                       FontWeight="Bold"/>
+                            
+                            <TextBlock Grid.Row="2" HorizontalAlignment="Center"
+                                Text="Justinianana Edera, San Jose, Dinagat Islands"/>
+
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="172"/>
+                                    <ColumnDefinition Width="172"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="1" Text="Date Enrolled: "
+                            HorizontalAlignment="Right"/>
+
+                                <Border Grid.Column="2"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="2" x:Name="dateEnrolled" 
+                            HorizontalAlignment="Center"/>
+                            </Grid>
+
+                            <Grid Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="124"/>
+                                    <ColumnDefinition Width="124"/>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="124"/>
+                                    <ColumnDefinition Width="58"/>
+                                    <ColumnDefinition Width="96"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="1"
+                            HorizontalAlignment="Right" Text="Scholarship Grant: "/>
+                                <Border  Grid.Column="2"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="2" x:Name="scholarshipGrantS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="3"
+                            HorizontalAlignment="Right" Text="ID #"/>
+                                <Border  Grid.Column="4"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="4" x:Name="idNumberS" 
+                            HorizontalAlignment="Center"/>
+
+                                <TextBlock Grid.Column="5"
+                            HorizontalAlignment="Right" Text="A.Y."/>
+                                <Border Grid.Column="6"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="6" x:Name="ayS" 
+                            HorizontalAlignment="Center"/>
+                            </Grid>
+
+                            <Grid Grid.Row="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="38"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                            HorizontalAlignment="Left" Text="Name:"/>
+
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" Grid.ColumnSpan="3"/>
+
+                                <TextBlock Grid.Column="1" x:Name="lastNameS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" x:Name="firstNameS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="3" x:Name="middleNameS" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="38"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="1" Text="Last Name"
+                            HorizontalAlignment="Center"
+                            FontSize="10"/>
+
+                                <TextBlock Grid.Column="2" Text="First Name"
+                            HorizontalAlignment="Center"
+                            FontSize="10"/>
+
+                                <TextBlock Grid.Column="3" Text="Middle Name"
+                            HorizontalAlignment="Center"
+                            FontSize="10"/>
+                            </Grid>
+
+                            <Grid Grid.Row="7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Sex: "
+                            HorizontalAlignment="Left"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="sexS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Civil Status: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="civilStatusS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="4" Text="Program: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="5"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="5" x:Name="programS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="6" Text="Yr. Level: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="7"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="7" x:Name="yrLevelS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="8" Text="Sem.: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="9"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="9" x:Name="semS" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="104"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="85"/>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="85"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Basis of Admission: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="basisOfAdmissionS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Date of Birth: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="dateOfBirthS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="4" Text="Place of Birth: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="5"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="5" x:Name="placeOfBirthS" 
+                            HorizontalAlignment="Left" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="9">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="170"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="172"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Elementary Course Completed: "
+                            HorizontalAlignment="Left"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="elemCompletedS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Year Graduated: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="elemYrGradS" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="135"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="172"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="High School Completed: "
+                            HorizontalAlignment="Left"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="hsCompletedS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Year Graduated: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="hsYrGradS" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="11">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="172"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Parents/Guardian: "
+                            HorizontalAlignment="Left"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="parentsGuardianS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Contact No.: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="contactNoS" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="172"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Address: "
+                            HorizontalAlignment="Left"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="addressS" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Email Add: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="emailS" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Border Grid.Row="14" Grid.RowSpan="12" BorderThickness=".5"/>
+
+                            <Grid Grid.Row="14" Grid.RowSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <StackPanel>
+                                        <TextBlock Text="Course" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" FontWeight="Bold"/>
+                                        <TextBlock Text="Code" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="Descriptive Title" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Row="0" Grid.ColumnSpan="2">
+                                        <TextBlock Text="Units" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Row="1" Grid.Column="0">
+                                        <TextBlock Text="Lec" VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Row="1" Grid.Column="1">
+                                        <TextBlock Text="lab" VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                                <Border Grid.Column="3" BorderThickness=".5">
+                                    <TextBlock Text="Days" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Border Grid.Column="4" BorderThickness=".5">
+                                    <TextBlock Text="Time" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Border Grid.Column="5" BorderThickness=".5">
+                                    <TextBlock Text="Room" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Border Grid.Column="6" BorderThickness=".5">
+                                    <TextBlock Text="Instructor" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Border Grid.Column="7" BorderThickness=".5">
+                                    <StackPanel>
+                                        <TextBlock Text="Instructor's" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                        <TextBlock Text="Initial" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    </StackPanel>
+
+                                </Border>
+
+                            </Grid>
+
+                            <Grid Grid.Row="16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode1S"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle1S"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec1S"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab1S"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor1S"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="17">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode2S"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle2S"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec2S"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab2S"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor2S"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="18">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode3S"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle3S"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec3S"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab3S"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor3S"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="19">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode4S"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle4S"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec4S"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab4S"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor4S"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode5S"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle5S"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec5S"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab5S"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor5S"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="21">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode6S"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle6S"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec6S"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab6S"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor6S"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="22">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode7S"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle7S"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec7S"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab7S"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor7S"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="23">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode8S"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle8S"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec8S"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab8S"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor8S"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="24">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode9S"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle9S"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec9S"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab9S"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor9S"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="25">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border BorderThickness=".5" Grid.Column="0"
+                                Grid.ColumnSpan="2">
+                                    <TextBlock Text="TOTAL NO. of UNITS" 
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lecTotalS"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="labTotalS"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6"></Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+
+                            </Grid>
+
+                            <Grid Grid.Row="29" Grid.RowSpan="2"
+                                  x:Name="OldAdminS">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="deanNameS"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="deanPositionS"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="vpaNameS"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="vpaPositionS"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="cashierNameS"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="cashierPositionS"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="srNameS"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="srPositionS"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                            </Grid>
+
+                            <Grid Grid.Row="29" Grid.RowSpan="2"
+                                  x:Name="NewAdminS">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="gcNameSN"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                        FontWeight="Bold" FontSize="11"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="gcPositionSN"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="deanNameSN"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                        FontSize="11" FontWeight="Bold"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="deanPositionSN"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="vpaNameSN"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                        FontSize="11" FontWeight="Bold"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="0"
+                                        Text="" FontSize="10" x:Name="vpaPositionSN"
+                                        HorizontalAlignment="Center"
+                                        FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="cashierNameSN"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                        FontWeight="Bold" FontSize="11"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="cashierPositionSN"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="4">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="srNameSN"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                        FontWeight="Bold" FontSize="11"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="srPositionSN"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                            </Grid>
+
+                            <TextBlock Grid.Row="32" Text="Statement of Consent"
+                                       FontStyle="Italic" FontWeight="Bold"/>
+                            
+                            <TextBlock Grid.Row="33" Text="" x:Name="consentS"
+                                       FontSize="10" FontStyle="Italic"/>
+                        </Grid>
+        <!-- Student Copy Here -->
+
+        <!--Deans Copy Here-->
+                        <Border Grid.Row="2" BorderThickness="0 0 0 .5"/>
+                        <Grid Grid.Row="2">
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="DodgerBlue"/>
+                                </Style>
+                            </Grid.Resources>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="16"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="16"/>
+
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="DJEMFCST FORM No. 003" FontSize="9"/>
+                                    <TextBlock Text="Revised Form 2018 (Enrollment)" FontSize="9"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="" x:Name="headD" 
+                                               FontSize="14" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="" x:Name="headProgramD"
+                                               FontSize="14" HorizontalAlignment="Center"/>
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="2" Text="" Margin="0 0 5 0" x:Name="copyD"
+                                    HorizontalAlignment="Right" FontSize="14" FontStyle="Oblique"/>
+                            </Grid>
+                            <TextBlock Grid.Row="1" HorizontalAlignment="Center"
+                                Text="DON JOSE ECLEO MEMORIAL FOUNDATION COLLEGE OF SCIENCE AND TECHNOLOGY"
+                                       FontWeight="Bold"/>
+
+                            <TextBlock Grid.Row="2" HorizontalAlignment="Center"
+                                Text="Justinianana Edera, San Jose, Dinagat Islands"/>
+
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="172"/>
+                                    <ColumnDefinition Width="172"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="1" Text="Date Enrolled: "
+                            HorizontalAlignment="Right"/>
+
+                                <Border Grid.Column="2"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="2" x:Name="dateEnrolledD" 
+                            HorizontalAlignment="Center"/>
+                            </Grid>
+
+                            <Grid Grid.Row="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="124"/>
+                                    <ColumnDefinition Width="124"/>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="124"/>
+                                    <ColumnDefinition Width="58"/>
+                                    <ColumnDefinition Width="96"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="1"
+                            HorizontalAlignment="Right" Text="Scholarship Grant: "/>
+                                <Border  Grid.Column="2"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="2" x:Name="scholarshipGrantD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="3"
+                            HorizontalAlignment="Right" Text="ID #"/>
+                                <Border  Grid.Column="4"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="4" x:Name="idNumberD" 
+                            HorizontalAlignment="Center"/>
+
+                                <TextBlock Grid.Column="5"
+                            HorizontalAlignment="Right" Text="A.Y."/>
+                                <Border Grid.Column="6"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="6" x:Name="ayD" 
+                            HorizontalAlignment="Center"/>
+                            </Grid>
+
+                            <Grid Grid.Row="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="38"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                            HorizontalAlignment="Left" Text="Name:"/>
+
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" Grid.ColumnSpan="3"/>
+
+                                <TextBlock Grid.Column="1" x:Name="lastNameD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" x:Name="firstNameD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="3" x:Name="middleNameD" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="38"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="1" Text="Last Name"
+                            HorizontalAlignment="Center"
+                            FontSize="10"/>
+
+                                <TextBlock Grid.Column="2" Text="First Name"
+                            HorizontalAlignment="Center"
+                            FontSize="10"/>
+
+                                <TextBlock Grid.Column="3" Text="Middle Name"
+                            HorizontalAlignment="Center"
+                            FontSize="10"/>
+                            </Grid>
+
+                            <Grid Grid.Row="7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Sex: "
+                            HorizontalAlignment="Left"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="sexD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Civil Status: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="civilStatusD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="4" Text="Program: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="5"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="5" x:Name="programD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="6" Text="Yr. Level: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="7"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="7" x:Name="yrLevelD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="8" Text="Sem.: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="9"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="9" x:Name="semD" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="104"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="85"/>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="85"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Basis of Admission: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="basisOfAdmissionD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Date of Birth: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="dateOfBirthD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="4" Text="Place of Birth: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="5"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="5" x:Name="placeOfBirthD" 
+                            HorizontalAlignment="Left" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="9">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="170"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="172"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Elementary Course Completed: "
+                            HorizontalAlignment="Left"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="elemCompletedD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Year Graduated: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="elemYrGradD" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="135"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="172"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="High School Completed: "
+                            HorizontalAlignment="Left"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="hsCompletedD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Year Graduated: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="hsYrGradD" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="11">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="172"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Parents/Guardian: "
+                            HorizontalAlignment="Left"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="parentsGuardianD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Contact No.: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="contactNoD" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Grid Grid.Row="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="172"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Address: "
+                            HorizontalAlignment="Left"/>
+                                <Border Grid.Column="1"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="1" x:Name="addressD" 
+                            HorizontalAlignment="Center" Text=""/>
+
+                                <TextBlock Grid.Column="2" Text="Email Add: "
+                            HorizontalAlignment="Right"/>
+                                <Border Grid.Column="3"
+                            BorderThickness="0 0 0 .5" />
+                                <TextBlock Grid.Column="3" x:Name="emailD" 
+                            HorizontalAlignment="Center" Text=""/>
+                            </Grid>
+
+                            <Border Grid.Row="14" Grid.RowSpan="12" BorderThickness=".5"/>
+
+                            <Grid Grid.Row="14" Grid.RowSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <StackPanel>
+                                        <TextBlock Text="Course" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" FontWeight="Bold"/>
+                                        <TextBlock Text="Code" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="Descriptive Title" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Row="0" Grid.ColumnSpan="2">
+                                        <TextBlock Text="Units" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Row="1" Grid.Column="0">
+                                        <TextBlock Text="Lec" VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Row="1" Grid.Column="1">
+                                        <TextBlock Text="lab" VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                                <Border Grid.Column="3" BorderThickness=".5">
+                                    <TextBlock Text="Days" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Border Grid.Column="4" BorderThickness=".5">
+                                    <TextBlock Text="Time" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Border Grid.Column="5" BorderThickness=".5">
+                                    <TextBlock Text="Room" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Border Grid.Column="6" BorderThickness=".5">
+                                    <TextBlock Text="Instructor" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Border Grid.Column="7" BorderThickness=".5">
+                                    <StackPanel>
+                                        <TextBlock Text="Instructor's" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                        <TextBlock Text="Initial" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    </StackPanel>
+
+                                </Border>
+
+                            </Grid>
+
+                            <Grid Grid.Row="16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode1D"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle1D"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec1D"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab1D"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor1D"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="17">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode2D"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle2D"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec2D"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab2D"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor2D"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="18">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode3D"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle3D"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec3D"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab3D"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor3D"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="19">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode4D"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle4D"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec4D"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab4D"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor4D"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode5D"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle5D"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec5D"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab5D"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor5D"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="21">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode6D"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle6D"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec6D"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab6D"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor6D"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="22">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode7D"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle7D"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec7D"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab7D"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor7D"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="23">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode8D"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle8D"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec8D"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab8D"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor8D"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="24">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="courseCode9D"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderThickness=".5">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="descriptiveTitle9D"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lec9D"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lab9D"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6">
+                                    <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="instructor9D"/>
+                                </Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="25">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border BorderThickness=".5" Grid.Column="0"
+                                Grid.ColumnSpan="2">
+                                    <TextBlock Text="TOTAL NO. of UNITS" 
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"/>
+                                </Border>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness=".5" Grid.Column="0">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="lecTotalD"/>
+                                    </Border>
+                                    <Border BorderThickness=".5" Grid.Column="1">
+                                        <TextBlock Text="" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                       x:Name="labTotalD"/>
+                                    </Border>
+                                </Grid>
+                                <Border BorderThickness=".5" Grid.Column="3"></Border>
+                                <Border BorderThickness=".5" Grid.Column="4"></Border>
+                                <Border BorderThickness=".5" Grid.Column="5"></Border>
+                                <Border BorderThickness=".5" Grid.Column="6"></Border>
+                                <Border BorderThickness=".5" Grid.Column="7"></Border>
+
+                            </Grid>
+
+                            <Grid Grid.Row="29" Grid.RowSpan="2" 
+                                  x:Name="OldAdminD">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="deanNameD"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="deanPositionD"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="vpaNameD"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="vpaPositionD"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="cashierNameD"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="cashierPositionD"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="srNameD"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="srPositionD"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                            </Grid>
+
+                            <Grid Grid.Row="29" Grid.RowSpan="2" 
+                                  x:Name="NewAdminD">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="gcNameDN"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                        FontWeight="Bold" FontSize="11"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="gcPositionDN"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="deanNameDN"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                        FontWeight="Bold" FontSize="11"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="deanPositionDN"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="vpaNameDN"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold" FontSize="11"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="0"
+                                        Text="" FontSize="10" x:Name="vpaPositionDN"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="cashierNameDN"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold" FontSize="11"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="cashierPositionDN"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                                <Grid Grid.Column="4">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="" x:Name="srNameDN"
+                                        HorizontalAlignment="Center" Margin="5 0"
+                                               FontWeight="Bold" FontSize="11"/>
+                                    <Border Grid.Row="0" BorderThickness="0 0 0 .5"
+                                        Margin="5 0"/>
+                                    <TextBlock Grid.Row="1" Margin="20 0"
+                                        Text="" FontSize="10" x:Name="srPositionDN"
+                                        HorizontalAlignment="Center"
+                                               FontStyle="Italic"/>
+                                </Grid>
+
+                            </Grid>
+
+                            <TextBlock Grid.Row="32" Text="Statement of Consent"
+                                       FontStyle="Italic" FontWeight="Bold"/>
+
+                            <TextBlock Grid.Row="33" Text="" x:Name="consentD"
+                                       FontSize="10" FontStyle="Italic"/>
+                        </Grid>
+                        <!--Deans Copy Here-->
+
+                    </Grid> 
+
+                </Grid>
+            </ScrollViewer>
+            
+        </Grid>
+    </Border>
+</Window>

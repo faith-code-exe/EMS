@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>enrollment.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\administrators.png" />
+    <None Remove="Images\close.png" />
+    <None Remove="Images\courses.png" />
+    <None Remove="Images\dashboard.png" />
+    <None Remove="Images\enrollment.png" />
+    <None Remove="Images\maximize.png" />
+    <None Remove="Images\minimize.png" />
+    <None Remove="Images\print.png" />
+    <None Remove="Images\settings.png" />
+    <None Remove="Images\students.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.115.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\administrators.png" />
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\courses.png" />
+    <Resource Include="Images\dashboard.png" />
+    <Resource Include="Images\enrollment.png" />
+    <Resource Include="Images\maximize.png" />
+    <Resource Include="Images\minimize.png" />
+    <Resource Include="Images\print.png" />
+    <Resource Include="Images\settings.png" />
+    <Resource Include="Images\students.png" />
+  </ItemGroup>
+
+</Project>
